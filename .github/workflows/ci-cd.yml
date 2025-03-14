@@ -1,0 +1,50 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code 👀
+        uses: actions/checkout@v4
+
+      - name: Set up NodeJS 📦
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📦
+        run: npm install
+
+      - name: Build the project 🔨
+        run: npm run build
+
+      - name: Run tests 🚨
+        run: npm test
+
+      - name: Deploy to AWS 🚀
+        uses: aws-actions/aws-lambda-deploy@v1
+        with:
+          function-name: ${{ secrets.LAMBDA_FUNCTION_NAME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          image-uri: ${{ steps.build.outputs.image }}
+
+      - name: Notify by SMS
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          curl -X POST \
+          --url "https://api.sarbacane.com/sendkit/sms/send/notification" \
+          --header "Content-Type: application/json" \
+          --header "x-apikey: ${{ secrets.API_KEY }}" \
+          --data '{ "number": "+33766840493", "message": "CI/CD Pipeline has failed for ${{ github.workflow }}.", "sender": "CICD Pipeline", "campaignName": "Code de confirmation", "category": "codeConfirmation" }'
+
+        
