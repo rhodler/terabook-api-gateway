@@ -34,7 +34,7 @@ jobs:
         run: |
           response=$(curl -s --request POST \
             --url https://api.sarbacane.com/sendkit/sms/send/notification \
-            --header "x-apiKey: 26yrvxaonr04ccmab9fbdmrka22chdi0du6cfgyogxqv" \
+            --header "x-apiKey: ${{secrets.API_KEY}}" \
             --header "Content-Type: application/json" \
-            --data '{"number":"+33766840493","message":"CI/CD Pipeline","sender":"YourCompany","campaignName":"Code de confirmation","category":"codeConfirmation"}')
+            --data '{"number":"${{secrets.PHONE_NUMBER}}","message":"CI/CD Pipeline","sender":"YourCompany","campaignName":"Code de confirmation","category":"codeConfirmation"}')
           echo "response from curl = $response"
