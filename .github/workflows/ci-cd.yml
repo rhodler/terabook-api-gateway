@@ -38,8 +38,6 @@ jobs:
           image-uri: ${{ steps.build.outputs.image }}
 
       - name: Notify by SMS
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           curl -X POST \
           --url "https://api.sarbacane.com/sendkit/sms/send/notification" \
