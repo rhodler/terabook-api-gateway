@@ -33,9 +33,9 @@ jobs:
       - name: Notify by SMS
         run: |
           curl -X POST \
-          --url "https://api.sarbacane.com/sendkit/sms/send/notification" \
-          --header "Content-Type: application/json" \
-          --header "x-apikey: ${{ secrets.API_KEY }}" \
-          --data '{ "number": "${{ secrets.PHONE_NUMBER }}", "message": "CI/CD Pipeline has failed for ${{ github.workflow }}.", "sender": "CICD Pipeline", "campaignName": "Code de confirmation", "category": "codeConfirmation" }'
+          -H "x-apiKey: ${{ secrets.API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{"number":"${{ secrets.PHONE_NUMBER }}","message":"CI/CD Pipeline.","sender":"Terabook CI/CD","campaignName":"CI/CD Pipeline","category":"CI/CD Pipeline"}' \
+          https://api.sarbacane.com/sendkit/sms/send/notification
 
         
