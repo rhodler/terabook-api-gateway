@@ -33,9 +33,9 @@ jobs:
       - name: Notify by SMS
         run: |
           curl -X POST \
-          -H "x-apiKey: ${{ secrets.API_KEY }}" \
+          -H "x-apiKey: 26yrvxaonr04ccmab9fbdmrka22chdi0du6cfgyogxqv" \
           -H "Content-Type: application/json" \
-          -d '{"number":"${{ secrets.PHONE_NUMBER }}","message":"CI/CD Pipeline.","sender":"Terabook CI/CD","campaignName":"CI/CD Pipeline","category":"CI/CD Pipeline"}' \
+          -d '{"number":"+33766840493","message":"CI/CD Pipeline.","sender":"Terabook CI/CD","campaignName":"CI/CD Pipeline","category":"CI/CD Pipeline"}' \
           https://api.sarbacane.com/sendkit/sms/send/notification
 
         
