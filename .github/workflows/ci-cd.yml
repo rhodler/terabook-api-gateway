@@ -36,6 +36,6 @@ jobs:
           --url "https://api.sarbacane.com/sendkit/sms/send/notification" \
           --header "Content-Type: application/json" \
           --header "x-apikey: ${{ secrets.API_KEY }}" \
-          --data '{ "number": "+33766840493", "message": "CI/CD Pipeline has failed for ${{ github.workflow }}.", "sender": "CICD Pipeline", "campaignName": "Code de confirmation", "category": "codeConfirmation" }'
+          --data '{ "number": "${{ secrets.PHONE_NUMBER }}", "message": "CI/CD Pipeline has failed for ${{ github.workflow }}.", "sender": "CICD Pipeline", "campaignName": "Code de confirmation", "category": "codeConfirmation" }'
 
         
