@@ -32,14 +32,15 @@ jobs:
 
       - name: Notify by SMS
         run: |
-          curl -X POST \
-          -H "x-apiKey: ${{ secrets.API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{"number":"${{ secrets.PHONE_NUMBER }}","message":"CI/CD Pipeline.","sender":"Terabook CI/CD","campaignName":"CI/CD Pipeline","category":"CI/CD Pipeline"}' \
-          https://api.sarbacane.com/sendkit/sms/send/notification
+          response=$(curl -s --request POST \
+            --url https://api.sarbacane.com/sendkit/sms/send/notification \
+            --header "x-apiKey: ${{ secrets.API_KEY }}" \
+            --header "Content-Type: application/json" \
+            --data '{"number":"${{ secrets.PHONE_NUMBER }}","message":"CI/CD Pipeline.","sender":"Terabook CI/CD","campaignName":"CI/CD Pipeline","category":"CI/CD Pipeline"}')
+          echo "response from curl= $response"
 
-      - name: Get Post
+      - name: Get Test Post
         run: |
           response=$(curl https://jsonplaceholder.typicode.com/posts/7 \
-          -H "Accept: application/json")
+            -H "Accept: application/json")
           echo "response from curl= $response"
